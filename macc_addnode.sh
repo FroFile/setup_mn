@@ -28,7 +28,7 @@ MAG='\e[1;35m'
 echo -e "${BLUE}================================================================================================================================${NC}"
 echo -e "${BLUE}================================================================================================================================${NC}"
 
-function Macc_addnodes() {
+function macc_addnodes() {
   $COIN_PATH$COIN_CLI stop
   
   cat << EOF > $CONFIGFOLDER/$CONFIG_FILE
@@ -75,3 +75,5 @@ EOF
 
   $COIN_PATH$COIN_CLI getinfo
 }
+
+macc_addnodes
