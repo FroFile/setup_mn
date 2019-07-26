@@ -32,6 +32,7 @@ function macc_addnodes() {
   $COIN_PATH$COIN_CLI stop
   
   cat << EOF > $CONFIGFOLDER/$CONFIG_FILE
+  masternode=1
 addnode=45.32.36.18
 addnode=202.182.101.162
 addnode=149.28.31.156
