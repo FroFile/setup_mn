@@ -30,7 +30,7 @@ echo -e "${RED}=================================================================
 
 read -p "IPv6?" NODEIPv6
 
-echo "${NODEIP}`s IPv6 is ${NODEIPv6}"  
+echo "${NODEIPv6}"  
 
 function edit_macc_add_IPv6() {
   $COIN_PATH$COIN_CLI stop
