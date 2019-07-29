@@ -70,13 +70,13 @@ sleep 2
 $COIN_PATH$COIN_DAEMON -daemon
 sleep 2
 
-GENKEY=$COIN_PATH$COIN_CLI masternode genkey
+GENKEY1=$COIN_PATH$COIN_CLI masternode genkey
 echo -e "123456789"
-echo -e "${GENKEY}"
+echo -e "${GENKEY1}"
 
-GENKEY=$COIN_PATH$COIN_CLI masternode genkey
+GENKEY2=$COIN_PATH$COIN_CLI masternode genkey
 echo -e "223456789"
-echo -e "${GENKEY}"
+echo -e "${GENKEY2}"
 
 
 function edit_macc_add_IPv6() {
