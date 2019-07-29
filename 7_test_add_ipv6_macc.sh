@@ -70,11 +70,11 @@ sleep 2
 $COIN_PATH$COIN_DAEMON -daemon
 sleep 2
 
-GENKEY1=$COIN_PATH$COIN_CLI masternode genkey
+GENKEY=$( $COIN_PATH$COIN_CLI masternode genkey)
 echo -e "123456789"
 echo -e "${GENKEY1}"
 
-GENKEY2=$COIN_PATH$COIN_CLI masternode genkey
+GENKEY=$( $COIN_PATH$COIN_CLI masternode genkey)
 echo -e "223456789"
 echo -e "${GENKEY2}"
 
