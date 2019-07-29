@@ -54,9 +54,13 @@ if [[ $NODEIP != $IPV4 ]]; then
 fi
 
 
-echo -e " 1Agu : $1"
+echo -e " 1Agu2 : $1"
 
-echo -e " 1Agu : ${1}"
+echo -e " 1Agu3 : ${1}"
+
+echo -e " 1Agu4 : $IPV4"
+
+echo -e " 1Agu5 : ${IPV4}"
 
 echo -e "NODEIP : {$NODEIP}"
 
@@ -74,7 +78,7 @@ echo -e "${NODEIPv6}1"
 
 sed -i '3atestrpcuser=1/' /root/setup_mn/./README.md
 
-sed -i '3a${NODEIPv6}1=1/' /root/setup_mn/./README.md
+sed -i "3a${NODEIPv6}1=1/" /root/setup_mn/./README.md
 
 sed -i '3a$NODEIPv61=1/' /root/setup_mn/./README.md
 
