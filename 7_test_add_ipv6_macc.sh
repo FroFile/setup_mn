@@ -53,6 +53,15 @@ if [[ $NODEIP -ne $IPV4 ]]; then
    exit 1
 fi
 
+
+echo -e " 1Agu : $1"
+
+echo -e " 1Agu : ${1}"
+
+echo -e "NODEIP : {$NODEIP}"
+
+echo -e "IPV4 : {$IPV4}"
+
 echo -e "* Checking system *** OK"
 }
 
@@ -63,9 +72,9 @@ read -p "IPv6?" NODEIPv6
 
 echo -e "${NODEIPv6}1"  
 
-sed -i '2atestrpcuser=1/' /root/setup_mn/./test.sh
+sed -i '3atestrpcuser=1/' /root/setup_mn/./README.md
 
-sed -i '2a${NODEIPv6}1=1/' /root/setup_mn/./test.sh
+sed -i '3a${NODEIPv6}1=1/' /root/setup_mn/./README.md
 
 function edit_macc_add_IPv6() {
   $COIN_PATH$COIN_CLI stop
