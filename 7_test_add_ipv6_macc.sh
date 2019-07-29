@@ -48,7 +48,7 @@ fi
 NODEIP=$(curl -s4 icanhazip.com)
 #IPv6는 read로 전달하도록 해야할듯.
 
-if [[ $NODEIP -ne $IPV4 ]]; then
+if [[ $NODEIP != $IPV4 ]]; then
    echo -e "${RED} IPv4 and IPv6 must match.${NC}"
    exit 1
 fi
@@ -75,6 +75,13 @@ echo -e "${NODEIPv6}1"
 sed -i '3atestrpcuser=1/' /root/setup_mn/./README.md
 
 sed -i '3a${NODEIPv6}1=1/' /root/setup_mn/./README.md
+
+sed -i '3a$NODEIPv61=1/' /root/setup_mn/./README.md
+
+sed -i '3a$NODEIPv6 1=1/' /root/setup_mn/./README.md
+
+sed -i '3a$IPV4/' /root/setup_mn/./README.md
+
 
 function edit_macc_add_IPv6() {
   $COIN_PATH$COIN_CLI stop
