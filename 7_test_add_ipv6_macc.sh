@@ -49,8 +49,8 @@ fi
 NODEIP=$(curl -s4 icanhazip.com)
 #IPv6는 read로 전달하도록 해야할듯.
 
-if [[ $NODEIP != $IPV4 ]]; then
-   echo -e "${RED} IPv4 and IPv6 must match. You check IPc4.${NC}"
+if [[ $NODEIP != $IPV4V ]]; then
+   echo -e "${RED} IPv4 and IPv6 must match. You check IPc4. ${IPV4V}${NC}"
    exit 1
 fi
 
@@ -138,4 +138,5 @@ EOF
 }
 
 check_system_ipv4
+add_ipv6
 #edit_macc_add_IPv6
