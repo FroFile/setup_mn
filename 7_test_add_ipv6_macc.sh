@@ -64,12 +64,18 @@ echo -e "${RED}=================================================================
 #sed -i '3atestrpcuser=1/' /root/setup_mn/./README.md
 #sed -i "3a${NODEIPv6}1=1/" /root/setup_mn/./README.md
 
-GENKEY=$COIN_PATH$COIN_CLI masternode genkey
+$COIN_PATH$COIN_CLI stop
+sleep 2
 
+$COIN_PATH$COIN_DAEMON -daemon
+sleep 2
+
+GENKEY=$COIN_PATH$COIN_CLI masternode genkey
+echo -e "123456789"
 echo -e "${GENKEY}"
 
 GENKEY=$COIN_PATH$COIN_CLI masternode genkey
-
+echo -e "223456789"
 echo -e "${GENKEY}"
 
 
