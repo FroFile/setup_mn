@@ -12,7 +12,7 @@ COIN_NAME='mastercorecoin'
 #COIN_EXPLORER='http://chain.cdmcoin.org'
 COIN_PORT=29871
 RPC_PORT=29872
-SET_NUM=15
+SET_NUM=6
 
 BLUE="\033[0;34m"
 YELLOW="\033[0;33m"
@@ -24,8 +24,8 @@ NC='\033[0m'
 MAG='\e[1;35m'
 
 #전달값 확인.
-IPV4=$1
-IPV6=$2
+IPV4V=$1
+IPV6V=$2
 
 function check_system_ipv4() {
     echo -e "* Checking system for compatibilities"
@@ -70,36 +70,32 @@ echo "Running loop seq "$i    IPV6
 done
 
 function add_ipv6() {
-#ipv6가 추가되어 있는지를 어떻게 알 수 있을까... 추가할까...
-
-iface ens3 inet6 static
-13:address 2001:19f0:7002:137::1
-14:netmask 64
-15:up /sbin/ip -6 addr add dev ens3 2001:19f0:7002:137::2
-16:up /sbin/ip -6 addr add dev ens3 2001:19f0:7002:137::3
-17:up /sbin/ip -6 addr add dev ens3 2001:19f0:7002:137::4
-18:up /sbin/ip -6 addr add dev ens3 2001:19f0:7002:137::5
-
+#ipv6가 추가되어 있는지를 어떻게 알 수 있을까... 어떻게 추가할까...
 
 #11번 라인 삭제, Auto를 삭제함.
   sed -i '11d' /etc/network/interfaces
   
-#11a로 추가하면 11번줄 바로밑에 추가하는꼴
-  sed -i "11aiface ens3 inet6 static" /etc/network/interfaces
-  sed -i "12aaddress $IPV6" /etc/network/interfaces
-  sed -i "13anetmask 64
-  sed -i "14aup /sbin/ip -6 addr add dev ens3 
-  
-SET=$(seq 0 $SET_NUM)
-for i in $SET
-#반복문
-do
-#11번 라인 추가.
-echo "Running loop seq "$i    IPV6
-    # some instructions
-done
-#12번 라인 추가
-  
+#추가하기.
+  cat << EOF >> /root/setup_mn/./README.md
+iface ens3 inet6 static
+address ${IPV6V}1
+netmask 64
+up /sbin/ip -6 addr add dev ens3 ${IPV6V}2
+up /sbin/ip -6 addr add dev ens3 ${IPV6V}3
+up /sbin/ip -6 addr add dev ens3 ${IPV6V}4
+up /sbin/ip -6 addr add dev ens3 ${IPV6V}5
+up /sbin/ip -6 addr add dev ens3 ${IPV6V}6 
+up /sbin/ip -6 addr add dev ens3 ${IPV6V}7
+up /sbin/ip -6 addr add dev ens3 ${IPV6V}8
+up /sbin/ip -6 addr add dev ens3 ${IPV6V}9 
+up /sbin/ip -6 addr add dev ens3 ${IPV6V}a
+up /sbin/ip -6 addr add dev ens3 ${IPV6V}b
+up /sbin/ip -6 addr add dev ens3 ${IPV6V}c 
+up /sbin/ip -6 addr add dev ens3 ${IPV6V}d
+up /sbin/ip -6 addr add dev ens3 ${IPV6V}e
+up /sbin/ip -6 addr add dev ens3 ${IPV6V}f 
+EOF
+
 }
 
 echo -e "${RED}==========================================================================${NC}"
