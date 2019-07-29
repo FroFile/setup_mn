@@ -13,9 +13,6 @@ COIN_NAME='mastercorecoin'
 COIN_PORT=29871
 RPC_PORT=29872
 
-NODEIP=$(curl -s4 icanhazip.com)
-#IPv6는 read로 전달하도록 해야할듯.
-
 BLUE="\033[0;34m"
 YELLOW="\033[0;33m"
 CYAN="\033[0;36m" 
@@ -25,8 +22,39 @@ GREEN="\033[0;32m"
 NC='\033[0m'
 MAG='\e[1;35m'
 
-### test중
+#전달값 확인.
+IPV4=$1
+IPV6=$2
 
+function check_system() {
+    echo -e "* Checking system for compatibilities"
+if [[ $EUID -ne 0 ]]; then
+   echo -e "${RED}$0 must be run as root.${NC}"
+   exit 1
+fi
+
+if [[ -r /etc/os-release ]]; then
+    . /etc/os-release
+	echo -e "Verision ${VERSION_ID}"
+	if [[ "${VERSION_ID}" != "16.04" ]] ; then
+		echo -e "This script only supports Ubuntu 16.04 LTS, exiting."
+		exit 1
+	fi
+else
+    echo -e "This script only supports Ubuntu 16.04 LTS, exiting."
+    exit 1
+fi
+
+NODEIP=$(curl -s4 icanhazip.com)
+#IPv6는 read로 전달하도록 해야할듯.
+
+if [[ $NODEIP -ne IPV4 ]]; then
+   echo -e "${RED} IPv4 and IPv6 must match.${NC}"
+   exit 1
+fi
+
+echo -e "* Checking system *** OK"
+}
 
 echo -e "${RED}================================================================================================================================${NC}"
 echo -e "${RED}================================================================================================================================${NC}"
@@ -51,4 +79,5 @@ EOF
   $COIN_PATH$COIN_CLI getinfo
 }
 
+check_system
 #edit_macc_add_IPv6
