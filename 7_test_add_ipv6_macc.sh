@@ -53,38 +53,24 @@ if [[ $NODEIP != $IPV4 ]]; then
    exit 1
 fi
 
-
-echo -e " 1Agu2 : $1"
-
-echo -e " 1Agu3 : ${1}"
-
-echo -e " 1Agu4 : $IPV4"
-
-echo -e " 1Agu5 : ${IPV4}"
-
-echo -e "NODEIP : {$NODEIP}"
-
-echo -e "IPV4 : {$IPV4}"
-
 echo -e "* Checking system *** OK"
 }
 
 echo -e "${RED}================================================================================================================================${NC}"
 echo -e "${RED}================================================================================================================================${NC}"
 
-read -p "IPv6?" NODEIPv6
+#read -p "IPv6?" NODEIPv6
+#echo -e "${NODEIPv6}1"  
+#sed -i '3atestrpcuser=1/' /root/setup_mn/./README.md
+#sed -i "3a${NODEIPv6}1=1/" /root/setup_mn/./README.md
 
-echo -e "${NODEIPv6}1"  
+GENKEY=$COIN_PATH$COIN_CLI masternode genkey
 
-sed -i '3atestrpcuser=1/' /root/setup_mn/./README.md
+echo -e "${GENKEY}"
 
-sed -i "3a${NODEIPv6}1=1/" /root/setup_mn/./README.md
+GENKEY=$COIN_PATH$COIN_CLI masternode genkey
 
-sed -i '3a$NODEIPv61=1/' /root/setup_mn/./README.md
-
-sed -i '3a$NODEIPv6 1=1/' /root/setup_mn/./README.md
-
-sed -i '3a$IPV4/' /root/setup_mn/./README.md
+echo -e "${GENKEY}"
 
 
 function edit_macc_add_IPv6() {
