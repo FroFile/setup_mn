@@ -72,11 +72,11 @@ sleep 10
 
 GENKEY=$( $COIN_PATH$COIN_CLI masternode genkey)
 echo -e "123456789"
-echo -e "${GENKEY1}"
+echo -e "${GENKEY}"
 
 GENKEY=$( $COIN_PATH$COIN_CLI masternode genkey)
 echo -e "223456789"
-echo -e "${GENKEY2}"
+echo -e "${GENKEY}"
 
 
 function edit_macc_add_IPv6() {
