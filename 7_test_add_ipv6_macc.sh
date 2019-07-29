@@ -60,22 +60,17 @@ echo -e "${RED}*** Checking system and IPv4 *** "
 echo -e "${RED}==========================================================================${NC}"
 echo -e "${RED}==========================================================================${NC}"
 
-
 SET=$(seq 0 $SET_NUM)
 for i in $SET
+#반복문
 do
-echo "Running loop seq "$i
+#11번 라인 추가.
+echo "Running loop seq "$i    IPV6
     # some instructions
 done
 
-
 function add_ipv6() {
-
-#ipv6가 추가되어있냐?
-if [[ $NODEIP != $IPV4 ]]; then
- echo -e "${RED} IPv4 and IPv6 must match. You check IPc4.${NC}"
- exit 1
-fi
+#ipv6가 추가되어 있는지를 어떻게 알 수 있을까... 추가할까...
 
 iface ens3 inet6 static
 13:address 2001:19f0:7002:137::1
@@ -86,12 +81,23 @@ iface ens3 inet6 static
 18:up /sbin/ip -6 addr add dev ens3 2001:19f0:7002:137::5
 
 
-#11번 라인 삭제
+#11번 라인 삭제, Auto를 삭제함.
   sed -i '11d' /etc/network/interfaces
   
-for ((AN1=0; AN1<=; n2++))
+#11a로 추가하면 11번줄 바로밑에 추가하는꼴
+  sed -i "11aiface ens3 inet6 static" /etc/network/interfaces
+  sed -i "12aaddress $IPV6" /etc/network/interfaces
+  sed -i "13anetmask 64
+  sed -i "14aup /sbin/ip -6 addr add dev ens3 
+  
+SET=$(seq 0 $SET_NUM)
+for i in $SET
+#반복문
+do
 #11번 라인 추가.
-  sed -i '11aiface ens3 inet6 static'
+echo "Running loop seq "$i    IPV6
+    # some instructions
+done
 #12번 라인 추가
   
 }
