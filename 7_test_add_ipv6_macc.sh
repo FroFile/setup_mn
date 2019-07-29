@@ -68,7 +68,7 @@ $COIN_PATH$COIN_CLI stop
 sleep 2
 
 $COIN_PATH$COIN_DAEMON -daemon
-sleep 2
+sleep 10
 
 GENKEY=$( $COIN_PATH$COIN_CLI masternode genkey)
 echo -e "123456789"
