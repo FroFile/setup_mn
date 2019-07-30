@@ -49,33 +49,26 @@ fi
 NODEIP=$(curl -s4 icanhazip.com)
 #IPv6는 read로 전달하도록 해야할듯.
 
+#혹시 IPv4를 잘못붙여넣지 않았는지 확인.
 if [[ $NODEIP != $IPV4V ]]; then
    echo -e "${RED} IPv4 and IPv6 must match. You check IPc4. ${IPV4V}${NC}"
    exit 1
 fi
 
-echo -e "${RED}*** Checking system and IPv4 *** "
+echo -e "${RED}*** Checking system and IPv4 OK *** "
 }
 
 echo -e "${RED}==========================================================================${NC}"
 echo -e "${RED}==========================================================================${NC}"
 
-SET=$(seq 0 $SET_NUM)
-for i in $SET
-#반복문
-do
-#11번 라인 추가.
-echo "Running loop seq "$i    IPV6
-    # some instructions
-done
-
 function add_ipv6() {
 #ipv6가 추가되어 있는지를 어떻게 알 수 있을까... 어떻게 추가할까...
+#if [[ ~~~ != ~~~~ ]]; 
 
 #11번 라인 삭제, Auto를 삭제함.
   sed -i '11d' /etc/network/interfaces
   
-#추가하기.
+#IPv6 추가하기. 맨끝에 변하는 자리 하나는 빼놓고 넣어주기.
   cat << EOF >> /root/setup_mn/./README.md
 iface ens3 inet6 static
 address ${IPV6V}1
@@ -94,8 +87,17 @@ up /sbin/ip -6 addr add dev ens3 ${IPV6V}c
 up /sbin/ip -6 addr add dev ens3 ${IPV6V}d
 up /sbin/ip -6 addr add dev ens3 ${IPV6V}e
 up /sbin/ip -6 addr add dev ens3 ${IPV6V}f 
-EOF
+EOF #파일끝 
 
+#일단은 네트워크는 추가해놓는게 좋을듯해서 추가함.
+
+#네트워크 재부팅
+systemctl restart networking.service
+sleep 3
+
+#추가했던 네트워크들이 확인되는지 체크하기
+ip addr show ens3
+sleep 3
 }
 
 echo -e "${RED}==========================================================================${NC}"
