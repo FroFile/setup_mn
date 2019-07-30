@@ -168,9 +168,23 @@ echo -e "${RED}=================================================================
 echo -e "${RED}==========================================================================${NC}"
 
 function copy_dir_add_conf() {
+#반복문으로 대체하자
+cp -r -p $CONFIGFOLDER ${CONFIGFOLDER}1
+cp -r -p $CONFIGFOLDER ${CONFIGFOLDER}2
+cp -r -p $CONFIGFOLDER ${CONFIGFOLDER}3
+cp -r -p $CONFIGFOLDER ${CONFIGFOLDER}4
+cp -r -p $CONFIGFOLDER ${CONFIGFOLDER}5
+cp -r -p $CONFIGFOLDER ${CONFIGFOLDER}6
 
+sed -i '1s/rpcuser=/rpcuser=1/'  /root/.mastercorecoincore1/mastercorecoin.conf 
+sed -i '2s/rpcpassword=/rpcpassword=1/'  /root/.mastercorecoincore1/mastercorecoin.conf 
+sed -i '2arpcport=298721'  /root/.mastercorecoincore1/mastercorecoin.conf 
+sed -i '5s/listen=1/listen=0/'  /root/.mastercorecoincore1/mastercorecoin.conf 
+sed -i '8cbind=[2001:19f0:7002:137::1]'  /root/.mastercorecoincore1/mastercorecoin.conf
+sed -i '9cexternalip=[2001:19f0:7002:137::1]:29871'  /root/.mastercorecoincore1/mastercorecoin.conf
+#젠키 같다 붙이기.
+sed -i '12cmasternodeprivkey=7UHamy5JQc7Zs2RaXPTLZTGju8RSD2tFZWxx9z3BW2yKvKqvY3J' /root/.mastercorecoincore1/mastercorecoin.conf
 
-}
 #read -p "IPv6?" NODEIPv6
 #echo -e "${NODEIPv6}1"  
 #sed -i '3atestrpcuser=1/' /root/setup_mn/./README.md
@@ -190,6 +204,8 @@ GENKEY=$( $COIN_PATH$COIN_CLI masternode genkey)
 echo -e "223456789"
 echo -e "${GENKEY}"
 
+
+}
 
 
 
