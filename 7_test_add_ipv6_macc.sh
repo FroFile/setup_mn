@@ -176,12 +176,12 @@ cp -r -p $CONFIGFOLDER ${CONFIGFOLDER}4
 cp -r -p $CONFIGFOLDER ${CONFIGFOLDER}5
 cp -r -p $CONFIGFOLDER ${CONFIGFOLDER}6
 
-sed -i '1s/rpcuser=/rpcuser=1/'  /root/.mastercorecoincore1/mastercorecoin.conf 
-sed -i '2s/rpcpassword=/rpcpassword=1/'  /root/.mastercorecoincore1/mastercorecoin.conf 
-sed -i '2arpcport=298721'  /root/.mastercorecoincore1/mastercorecoin.conf 
-sed -i '5s/listen=1/listen=0/'  /root/.mastercorecoincore1/mastercorecoin.conf 
-sed -i '8cbind=[2001:19f0:7002:137::1]'  /root/.mastercorecoincore1/mastercorecoin.conf
-sed -i '9cexternalip=[2001:19f0:7002:137::1]:29871'  /root/.mastercorecoincore1/mastercorecoin.conf
+sed -i '1s/rpcuser=/rpcuser=1/'  $CONFIGFOLDER/$CONFIG_FILE
+sed -i '2s/rpcpassword=/rpcpassword=1/'  $CONFIGFOLDER/$CONFIG_FILE
+sed -i '2arpcport=298721'  $CONFIGFOLDER/$CONFIG_FILE
+sed -i '5s/listen=1/listen=0/'  $CONFIGFOLDER/$CONFIG_FILE
+sed -i '8cbind=[2001:19f0:7002:137::1]'  $CONFIGFOLDER/$CONFIG_FILE
+sed -i '9cexternalip=[2001:19f0:7002:137::1]:29871'  $CONFIGFOLDER/$CONFIG_FILE
 #젠키 같다 붙이기.
 sed -i '12cmasternodeprivkey=7UHamy5JQc7Zs2RaXPTLZTGju8RSD2tFZWxx9z3BW2yKvKqvY3J' /root/.mastercorecoincore1/mastercorecoin.conf
 
