@@ -60,6 +60,8 @@ fi
 echo -e "${RED}*** Input IPv4 : $inputIPv4 *** "
 echo -e "${RED}*** Input IPv6 : $inputIPv6 *** "
   
+  check_ipv6_tmp=1
+  
   sleep 3
   
 echo -e "${RED}$0 ======================================${NC}"
