@@ -34,14 +34,19 @@ inputIPv6=$2
 function Check_IPv4_IPv6() {
 
 NODEIPv4=$(curl -s4 icanhazip.com)
+sleep 1
+echo -e "${RED} Check this IPv4 : ${inputIPv4}${NC}"
 
 #혹시 IPv4를 잘못붙여넣지 않았는지 확인.
 if [[ $NODEIPv4 != $inputIPv4 ]]; then
    echo -e "${RED} IPv4 must match. You check this IPv4 : ${inputIPv4}${NC}"
+   
    exit 1
 fi
 
 NODEIPv6=$(curl -s6 icanhazip.com)
+sleep 1
+echo -e "${RED} Check this IPv6 : ${inputIPv6}${NC}"
 
 #체크만 해보기.
 cutNODEIPv6 =${NODEIPv6:0:20}
