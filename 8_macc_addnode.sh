@@ -26,6 +26,42 @@ GREEN="\033[0;32m"
 NC='\033[0m'
 MAG='\e[1;35m'
 
+##IPv4와 IPv6를 인수로 넣어주기.
+##IPv6는 read로 전달하도록 해야할듯.
+inputIPv4=$1
+inputIPv6=$2
+
+function Check_IPv4_IPv6() {
+
+NODEIPv4=$(curl -s4 icanhazip.com)
+
+#혹시 IPv4를 잘못붙여넣지 않았는지 확인.
+if [[ $NODEIPv4 != $inputIPv4 ]]; then
+   echo -e "${RED} IPv4 must match. You check this IPv4 : ${inputIPv4}${NC}"
+   exit 1
+fi
+
+NODEIPv6=$(curl -s6 icanhazip.com)
+
+#체크만 해보기.
+cutNODEIPv6 =${NODEIPv6:0:20}
+cutinputIPv6=${inputIPv6:0:20}
+
+if [[ $cutNODEIPv6 != $cutinputIPv6 ]]; then
+   echo -e "${RED} IPv6 must match. You check this IPv6 : ${inputIPv6}${NC}"
+   exit 1
+fi
+
+echo -e "${RED}*** Input IPv4 : $inputIPv4 *** "
+echo -e "${RED}*** Input IPv6 : $inputIPv6 *** "
+  
+  sleep 3
+  
+echo -e "${RED}$0 ======================================${NC}"
+echo -e "${RED}$0 =======     Check_IPv4_IPv6    =======${NC}"
+echo -e "${RED}$0 ======================================${NC}"
+  
+}
 
 function 0_bulid_stop_MACC() {
   wget -qO- https://github.com/mastercorecoin/mastercorecoin/releases/download/1.0.0.0/macc_mn_installer.sh | bash
@@ -33,6 +69,11 @@ function 0_bulid_stop_MACC() {
   
   $COIN_PATH$COIN_CLI stop
   sleep 3
+  
+echo -e "${RED}$0 ======================================${NC}"
+echo -e "${RED}$0 =======     bulid_stop_MACC    =======${NC}"
+echo -e "${RED}$0 ======================================${NC}"
+  
 }
 
 
@@ -50,26 +91,11 @@ echo -e "${RED}$0 ======================================${NC}"
 
 
 function 2_masternode_IPv6networkset(){
-
-  NODEIP_tmp=$(curl -s6 icanhazip.com)
-  ipv6_tmp=$(expr length "$NODEIP_tmp")
-
-  if [[ ${ipv6_tmp} -eq 38 ]]; then         #문자열 디폴트값 38 체크
-    check_ipv6_tmp=1
-    NODEIP_tmp=$(curl -s6 icanhazip.com)    #ipv6 값
-    NODEIPv6=${NODEIP_tmp:0:20}             #ipv6 값 앞에서부터 21자리 자름
-    #echo "NODEIPv6 : ${NODEIPv6}"
-    
+ 
     for (( i = 1; i <= $SET_NUM; i++)); do  #NODEIPv6에 포트셋팅  /etc/network/interfaces에서 쓰일 변수 생성
-      mn_IPv6[$i]=${NODEIPv6}:$i            #mn_IPv6[1~6]에   IPv6:1 ~ 6 값 생성
+      mn_IPv6[$i]=${inputIPv6}$i            #mn_IPv6[1~6]에   IPv6:1 ~ 6 값 생성
       echo "mn_IPv6[$i] : ${mn_IPv6[$i]}"
     done
-
-  else
-    echo -e "${RED}$0 You have to rebuild ipv6${NC}"
-    check_ipv6_tmp=0
-  fi
-  
   
 echo -e "${RED}$0 ======================================${NC}"
 echo -e "${RED}$0 ======= Make a IPv6 networkset =======${NC}"
@@ -241,6 +267,7 @@ fi
 
 ##초기화가 되어있어서 설치되어있다는 가정하에
 #0_bulid_stop_MACC
+Check_IPv4_IPv6
 
 1_masternode_Genprivkey
 2_masternode_IPv6networkset
