@@ -67,9 +67,6 @@ function 0_bulid_stop_MACC() {
   wget -qO- https://github.com/mastercorecoin/mastercorecoin/releases/download/1.0.0.0/macc_mn_installer.sh | bash
   sleep 5
   
-  $COIN_PATH$COIN_CLI stop
-  sleep 3
-  
 echo -e "${RED}$0 ======================================${NC}"
 echo -e "${RED}$0 =======     bulid_stop_MACC    =======${NC}"
 echo -e "${RED}$0 ======================================${NC}"
