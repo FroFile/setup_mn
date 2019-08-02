@@ -270,6 +270,15 @@ fi
 
 }
 
+function 6_check_getblockcount() {
+sleep 5
+
+for (( i = 1; i <= $SET_NUM; i++)); do
+  $COIN_PATH$COIN_CLI -datadir=$CONFIGFOLDER$i/ -conf=$CONFIGFOLDER$i/$CONFIG_FILE getblockcount
+done
+}
+
+
 ##초기화가 되어있어서 설치되어있다는 가정하에
 #0_bulid_stop_MACC
 Check_IPv4_IPv6
@@ -280,3 +289,4 @@ Check_IPv4_IPv6
 4_macc_node_setting
 edit_macc_addnode
 5_macc_node_starting
+6_check_getblockcount
