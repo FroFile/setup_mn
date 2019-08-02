@@ -252,7 +252,7 @@ function 5_macc_node_starting(){
 
 if [[ ${check_ipv6_tmp} -eq 1 ]]; then
 
-$COIN_PATH$COIN_DAEMON -datadir=$CONFIGFOLDER -conf=$CONFIGFOLDER/$CONFIG_FILE -daemon #reindex로 시작해야 하는지...
+$COIN_PATH$COIN_DAEMON -datadir=$CONFIGFOLDER -conf=$CONFIGFOLDER/$CONFIG_FILE -reindex #reindex로 시작해야 하는지...
 sleep 1
 
 for (( i = 1; i <= $SET_NUM; i++)); do
