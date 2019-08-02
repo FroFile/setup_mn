@@ -221,6 +221,7 @@ sed -i '11alogtimestamps=1\nmaxconnections=256\nport=29871' $CONFIGFOLDER/$CONFI
 for (( i = 1; i <= $SET_NUM; i++)); do
   #cp -r -p .mastercorecoincore/ .mastercorecoincore$i #디렉토리 문제 해결
   cp -r -p $CONFIGFOLDER $CONFIGFOLDER$i
+  echo "cp -r -p $CONFIGFOLDER $CONFIGFOLDER$i"
   sleep 1
 done
 
