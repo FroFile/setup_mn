@@ -49,8 +49,8 @@ sleep 1
 echo -e "${RED} Check this IPv6 : ${inputIPv6}${NC}"
 
 #체크만 해보기.
-cutNODEIPv6 =${NODEIPv6:0:20}
-cutinputIPv6=${inputIPv6:0:20}
+cutNODEIPv6 =${NODEIPv6:0:18}
+cutinputIPv6=${inputIPv6:0:18}
 
 if [[ $cutNODEIPv6 != $cutinputIPv6 ]]; then
    echo -e "${RED} IPv6 must match. You check this IPv6 : ${inputIPv6}${NC}"
