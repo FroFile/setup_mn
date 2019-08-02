@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#COIN_NAME='safeinsure' 
+#COIN_DAEMON="${COIN_NAME}d" 
+#COIN_CLI="${COIN_NAME}-cli"
+COIN_NAME='mastercorecoin'
 TMP_FOLDER=$(mktemp -d)
 CONFIG_FILE='mastercorecoin.conf'
 CONFIGFOLDER='/root/.mastercorecoincore'
@@ -8,7 +12,6 @@ COIN_CLI='mastercorecoin-cli'
 COIN_PATH='/usr/bin/'
 #COIN_TGZ='https://cdmcoin.org/condominium_ubuntu.zip'
 #COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
-COIN_NAME='mastercorecoin'
 #COIN_EXPLORER='http://chain.cdmcoin.org'
 COIN_PORT=29871
 RPC_PORT=29872
@@ -23,13 +26,28 @@ GREEN="\033[0;32m"
 NC='\033[0m'
 MAG='\e[1;35m'
 
+
+function 0_bulid_stop_MACC() {
+  wget -qO- https://github.com/mastercorecoin/mastercorecoin/releases/download/1.0.0.0/macc_mn_installer.sh | bash
+  sleep 5
+  
+  $COIN_PATH$COIN_CLI stop
+  sleep 3
+}
+
+
 #프라이빗키 생성 / 배열값 mn_Privkey[1 ~ 6]
 function 1_masternode_Genprivkey() {
 for (( i = 1; i <= $SET_NUM; i++)); do
   mn_Privkey[$i]="$($COIN_PATH$COIN_CLI masternode genkey)"
   echo "mn_Privkey[$i] : ${mn_Privkey[$i]}"
 done
+
+echo -e "${RED}$0 ======================================${NC}"
+echo -e "${RED}$0 ============ Make a Genkey ===========${NC}"
+echo -e "${RED}$0 ======================================${NC}"
 }
+
 
 function 2_masternode_IPv6networkset(){
 
@@ -41,6 +59,7 @@ function 2_masternode_IPv6networkset(){
     NODEIP_tmp=$(curl -s6 icanhazip.com)    #ipv6 값
     NODEIPv6=${NODEIP_tmp:0:20}             #ipv6 값 앞에서부터 21자리 자름
     #echo "NODEIPv6 : ${NODEIPv6}"
+    
     for (( i = 1; i <= $SET_NUM; i++)); do  #NODEIPv6에 포트셋팅  /etc/network/interfaces에서 쓰일 변수 생성
       mn_IPv6[$i]=${NODEIPv6}:$i            #mn_IPv6[1~6]에   IPv6:1 ~ 6 값 생성
       echo "mn_IPv6[$i] : ${mn_IPv6[$i]}"
@@ -50,18 +69,21 @@ function 2_masternode_IPv6networkset(){
     echo -e "${RED}$0 You have to rebuild ipv6${NC}"
     check_ipv6_tmp=0
   fi
-
+  
+  
+echo -e "${RED}$0 ======================================${NC}"
+echo -e "${RED}$0 ======= Make a IPv6 networkset =======${NC}"
+echo -e "${RED}$0 ======================================${NC}"
 }
+
 #IPv6는 read로 전달하도록 해야할듯.
 
 function 3_add_IPv6() {
 #ipv6가 추가되어 있는지를 어떻게 알 수 있을까... 어떻게 추가할까...
 #if [[ ~~~ != ~~~~ ]];
 
-#11번 라인 삭제, Auto를 삭제함.
-  if [[ ${check_ipv6_tmp} -eq 1 ]]; then
+  if [[ ${check_ipv6_tmp} -eq 1 ]]; then   #11번 라인 삭제, Auto를 삭제함.
     #statements
-
   sed -i '11d' /etc/network/interfaces
 
 #IPv6 추가하기. 맨끝에 변하는 자리 하나는 빼놓고 넣어주기.
@@ -76,8 +98,6 @@ for (( i = 2; i <= $SET_NUM; i++)); do  #NODEIPv6에 포트셋팅  /etc/network/
 up /sbin/ip -6 addr add dev ens3 ${mn_IPv6[$i]}
 EOF
 done
-
- #파일끝
 #일단은 네트워크는 추가해놓는게 좋을듯해서 추가함.
 
 #네트워크 재부팅
@@ -91,10 +111,10 @@ sleep 3
 #grep -n ^ /etc/network/interfaces
 
 else
-  echo -e "${RED}$0 ================================${NC}"
-  echo -e "${RED}$0 You have to rebuild ipv6 setting${NC}"
+  echo -e "${RED}$0 ======================================${NC}"
+  echo -e "${RED}$0 ===You have to rebuild ipv6 setting===${NC}"
+  echo -e "${RED}$0 ======================================${NC}"
 fi
-
 }
 
 function edit_macc_addnode() {            #addnode 할때 다른 명령어 같이 실행되니깐 addnode 기능만 따로~
@@ -106,7 +126,7 @@ function edit_macc_addnode() {            #addnode 할때 다른 명령어 같�
 for (( i = 1; i <= $SET_NUM; i++)); do
 
 sed -i '16,$d' $CONFIGFOLDER$i/$CONFIG_FILE           #addnode 초기화
-                                                    #$CONFIGFOLDER/$CONFIG_FILE 15line부터 끝까지 삭제
+                                                      #$CONFIGFOLDER/$CONFIG_FILE 15line부터 끝까지 삭제
 cat << EOF >> $CONFIGFOLDER$i/$CONFIG_FILE
 addnode=45.32.36.18
 addnode=202.182.101.162
@@ -154,9 +174,10 @@ done
 
 
 sleep 2
-echo -e "${RED}addnode work is done${NC}"
 
-
+echo -e "${RED}$0 ======================================${NC}"
+echo -e "${RED}$0 ======== addnode work is done ========${NC}"
+echo -e "${RED}$0 ======================================${NC}"
 }
 
 function 4_macc_node_setting(){
@@ -170,17 +191,18 @@ sed -i '3d'  $CONFIGFOLDER/$CONFIG_FILE
 sed -i '11alogtimestamps=1\nmaxconnections=256\nport=29871' $CONFIGFOLDER/$CONFIG_FILE
 
 for (( i = 1; i <= $SET_NUM; i++)); do
-  cp -r -p .mastercorecoincore/ .mastercorecoincore$i
+  #cp -r -p .mastercorecoincore/ .mastercorecoincore$i #디렉토리 문제 해결
+  cp -r -p $CONFIGFOLDER $CONFIGFOLDER$i
   sleep 1
 done
 
 for (( i = 1; i <= $SET_NUM; i++)); do
   sed -i "1s/rpcuser=/rpcuser=$i/"  $CONFIGFOLDER$i/$CONFIG_FILE
   sed -i "2s/rpcpassword=/rpcpassword=$i/"  $CONFIGFOLDER$i/$CONFIG_FILE
-  sed -i "2arpcport=29872$i"  $CONFIGFOLDER$i/$CONFIG_FILE
+  sed -i "2arpcport=$RPC_PORT$i"  $CONFIGFOLDER$i/$CONFIG_FILE
   sed -i "5s/listen=1/listen=0/"  $CONFIGFOLDER$i/$CONFIG_FILE
   sed -i "8cbind=[${mn_IPv6[$i]}]"  $CONFIGFOLDER$i/$CONFIG_FILE
-  sed -i "9cexternalip=[${mn_IPv6[$i]}]:29871"  $CONFIGFOLDER$i/$CONFIG_FILE
+  sed -i "9cexternalip=[${mn_IPv6[$i]}]:$COIN_PORT"  $CONFIGFOLDER$i/$CONFIG_FILE
   #젠키 같다 붙이기.
   sed -i "12cmasternodeprivkey=${mn_Privkey[$i]}" $CONFIGFOLDER$i/$CONFIG_FILE
 
@@ -199,12 +221,12 @@ function 5_macc_node_starting(){
 
 if [[ ${check_ipv6_tmp} -eq 1 ]]; then
 
-/usr/bin/mastercorecoind -datadir=/root/.mastercorecoincore/ -conf=/root/.mastercorecoincore/mastercorecoin.conf -reindex
+$COIN_PATH$COIN_DAEMON -datadir=$CONFIGFOLDER -conf=$CONFIGFOLDER$CONFIG_FILE -daemon #reindex로 시작해야 하는지...
 sleep 1
 
 for (( i = 1; i <= $SET_NUM; i++)); do
 
-/usr/bin/mastercorecoind -datadir=/root/.mastercorecoincore$i/ -conf=/root/.mastercorecoincore$i/mastercorecoin.conf -reindex
+$COIN_PATH$COIN_DAEMON -datadir=$CONFIGFOLDER$i -conf=$CONFIGFOLDER$i$CONFIG_FILE -daemon
 
 done
 
@@ -217,6 +239,8 @@ fi
 
 }
 
+##초기화가 되어있어서 설치되어있다는 가정하에
+#0_bulid_stop_MACC
 
 1_masternode_Genprivkey
 2_masternode_IPv6networkset
