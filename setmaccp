@@ -3,19 +3,19 @@
 #COIN_NAME='safeinsure'
 #COIN_DAEMON="${COIN_NAME}d"
 #COIN_CLI="${COIN_NAME}-cli"
-COIN_NAME='pointofpubliccoin'
+COIN_NAME='maccplus'
 TMP_FOLDER=$(mktemp -d)
-CONFIG_FILE='pointofpubliccoin.conf'
-CONFIGFOLDER='/root/.pointofpubliccoincore'
-COIN_DAEMON='pointofpubliccoind'
-COIN_CLI='pointofpubliccoin-cli'
+CONFIG_FILE='maccplus.conf'
+CONFIGFOLDER='/root/.maccpluscore'
+COIN_DAEMON='maccplusd'
+COIN_CLI='maccplus-cli'
 COIN_PATH='/usr/bin/'
 #COIN_TGZ='https://cdmcoin.org/condominium_ubuntu.zip'
 #COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 #COIN_EXPLORER='http://chain.cdmcoin.org'
 COIN_PORT=39871
 RPC_PORT=39872
-SET_NUM=9
+SET_NUM=3
 #$COIN_PATH$COIN_DAEMON -datadir=$CONFIGFOLDER -conf=$CONFIGFOLDER/$CONFIG_FILE -reindex
 BLUE="\033[0;34m"
 YELLOW="\033[0;33m"
