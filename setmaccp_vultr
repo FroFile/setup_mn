@@ -26,7 +26,7 @@ GREEN="\033[0;32m"
 NC='\033[0m'
 MAG='\e[1;35m'
 
-#ipv6값 전역변수 설정
+#ipv6값 전역변수 설정 -vultr
 sed -i '11,$d' /etc/network/interfaces
 
 tmpIPv6=$(curl -s6 icanhazip.com)
@@ -36,8 +36,8 @@ for (( i = 1; i <= $SET_NUM; i++)); do  #NODEIPv6에 포트셋팅  /etc/network/
   echo "mn_IPv6[$i] : ${mn_IPv6[$i]}"
 done
 
-
-function 0_bulid_stop_popc() {
+#설치 해놓은것들에 작업 _ 의미없음.
+function 0_bulid_stop_maccp() {
 git clone https://github.com/pointofpublic/popc-mn
 
 #!/usr/bin/expect
@@ -45,20 +45,19 @@ git clone https://github.com/pointofpublic/popc-mn
 spawn git clone https://github.com/pointofpublic/popc-mn
 expect -re "Username"
 sleep 1
-send "pointofpublic\r"
+send "point\r"
 
 expect -re "Password"
 sleep 1
-send "popc9799!\r"
+send "popc\r"
 interact
 
 #/root/popc-mn/./popc_mn_installer.sh
-
-}       #popc는 직접설치요망
+}
 
 function 1_popc_Genprivkey() {
 
-/usr/bin/pointofpubliccoind -datadir=/root/.pointofpubliccoincore/ -conf=/root/.pointofpubliccoincore/pointofpubliccoin.conf -reindex
+/usr/bin/maccplusd -datadir=/root/.maccpluscore/ -conf=/root/.maccpluscore/maccplus.conf -reindex
 sleep 20
 
 for (( i = 1; i <= $SET_NUM; i++)); do
